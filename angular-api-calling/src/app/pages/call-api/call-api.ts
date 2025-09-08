@@ -37,7 +37,9 @@ export class CallApiComponent implements OnInit {
     // this.trips = data as TripGetResponse[];
     this.trips = await this.tripService.getTrip();
     console.log(this.trips);
-    console.log(this.trips[0].name);
+    
+      console.log(this.trips[0].idx);
+      console.log(this.trips[0].name);
     console.log('Call Completed');
   }
 

@@ -70,7 +70,4 @@ interface Destination {
   value: number;
   name: string;
 }
-function updateTrip() {
-  throw new Error('Function not implemented.');
-}
 

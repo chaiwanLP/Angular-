@@ -1,4 +1,5 @@
 export interface TripGetResponse {
+id: any;
   idx: number;
   name: string;
   country: string;

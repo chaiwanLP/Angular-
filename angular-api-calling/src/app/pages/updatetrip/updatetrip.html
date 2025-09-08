@@ -1,54 +1,72 @@
-<div style="display: flex; flex-direction: column; align-items: center; width: 100vw">
-  <!-- ใส่ Trip ID เพื่อค้นหา -->
-  <mat-form-field appearance="outline" style="width: 200px">
-    <mat-label>Trip ID</mat-label>
-    <input matInput type="number" [(ngModel)]="tripId" />
-  </mat-form-field>
-  <button mat-raised-button color="primary" (click)="fetchTrip()" style="width: 200px; margin-bottom: 20px;">
+<div class="flex flex-col items-center w-full max-w-md mx-auto mt-10 space-y-4">
+
+  <!-- 🔍 ค้นหา Trip -->
+  <div class="w-full">
+    <label class="block text-sm font-medium mb-1">Trip ID</label>
+    <input
+      #tripId
+      type="number"
+      class="w-full border border-gray-300 rounded px-3 py-2"
+      placeholder="กรอก Trip ID"
+    />
+  </div>
+
+  <button
+    class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+    (click)="findOne(tripId)"
+  >
     Load Trip
   </button>
 
-  <!-- Form ข้อมูล Trip -->
-  <mat-form-field appearance="outline" style="width: 200px">
-    <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="name" />
-  </mat-form-field>
+  <!-- แสดงชื่อ Trip -->
+  <div *ngIf="Trips.length > 0" class="text-lg font-semibold text-center">
+    Loaded: {{ Trips[0]?.name }}
+  </div>
 
-  <mat-form-field appearance="outline" style="width: 200px">
-    <mat-label>Destination</mat-label>
-    <mat-select [(ngModel)]="destination">
-      <mat-option *ngFor="let d of destinations" [value]="d.value">
+  <!-- 📋 ฟอร์มอัปเดตข้อมูล -->
+  <div class="w-full">
+    <label class="block text-sm font-medium mb-1">Name</label>
+    <input [(ngModel)]="name" class="w-full border px-3 py-2 rounded" />
+  </div>
+
+  <div class="w-full">
+    <label class="block text-sm font-medium mb-1">Destination</label>
+    <select [(ngModel)]="destination" class="w-full border px-3 py-2 rounded">
+      <option *ngFor="let d of destinations" [value]="d.value">
         {{ d.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+      </option>
+    </select>
+  </div>
 
-  <mat-form-field appearance="outline" style="width: 200px">
-    <mat-label>Country</mat-label>
-    <input matInput [(ngModel)]="country" />
-  </mat-form-field>
+  <div class="w-full">
+    <label class="block text-sm font-medium mb-1">Country</label>
+    <input [(ngModel)]="country" class="w-full border px-3 py-2 rounded" />
+  </div>
 
-  <mat-form-field appearance="outline" style="width: 200px">
-    <mat-label>Cover Image</mat-label>
-    <input matInput [(ngModel)]="cover" />
-  </mat-form-field>
+  <div class="w-full">
+    <label class="block text-sm font-medium mb-1">Cover Image URL</label>
+    <input [(ngModel)]="cover" class="w-full border px-3 py-2 rounded" />
+  </div>
 
-  <mat-form-field appearance="outline" style="width: 200px">
-    <mat-label>Detail</mat-label>
-    <input matInput [(ngModel)]="detail" />
-  </mat-form-field>
+  <div class="w-full">
+    <label class="block text-sm font-medium mb-1">Detail</label>
+    <input [(ngModel)]="detail" class="w-full border px-3 py-2 rounded" />
+  </div>
 
-  <mat-form-field appearance="outline" style="width: 200px">
-    <mat-label>Price</mat-label>
-    <input matInput type="number" [(ngModel)]="price" />
-  </mat-form-field>
+  <div class="w-full">
+    <label class="block text-sm font-medium mb-1">Price</label>
+    <input type="number" [(ngModel)]="price" class="w-full border px-3 py-2 rounded" />
+  </div>
 
-  <mat-form-field appearance="outline" style="width: 200px">
-    <mat-label>Duration</mat-label>
-    <input matInput [(ngModel)]="duration" />
-  </mat-form-field>
+  <div class="w-full">
+    <label class="block text-sm font-medium mb-1">Duration (days)</label>
+    <input [(ngModel)]="duration" class="w-full border px-3 py-2 rounded" />
+  </div>
 
-  <button mat-raised-button color="accent" (click)="updateTrip()" style="width: 200px; margin-top: 10px;">
+  <button
+    class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
+    (click)="updateTrip()"
+  >
     Update Trip
   </button>
 </div>

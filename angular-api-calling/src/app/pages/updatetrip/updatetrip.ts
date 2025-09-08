@@ -1,3 +1,4 @@
+import { Trip } from './../../services/api/trip';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -5,7 +6,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
-import { Trip } from '../../services/api/trip';
+import { TripGetResponse } from '../../model/trip_get_res';
 
 @Component({
   selector: 'app-update-trip',
@@ -21,9 +22,8 @@ import { Trip } from '../../services/api/trip';
   ],
 })
 export class UpdateTripComponent {
-  // ฟิลด์ทั้งหมดของ Trip
   tripId: number | null = null;
-
+  Trips: TripGetResponse[] = [];
   name = '';
   destination = '';
   country = '';
@@ -33,51 +33,53 @@ export class UpdateTripComponent {
   duration = '';
 
   destinations = [
-    { name: 'Bangkok', value: 1 },
-    { name: 'Chiang Mai', value: 2 },
-    { name: 'Phuket', value: 3 },
+    { value: 1, name: 'เอเชีย' },
+    { value: 2, name: 'ยุโรป' },
+    { value: 3, name: 'เอเชียตะวันออกเฉียงใต้' },
+    { value: 9, name: 'ประเทศไทย' },
   ];
 
   constructor(private trip: Trip) {}
 
-  async fetchTrip() {
-    if (!this.tripId) {
+  async findOne(input: HTMLInputElement) {
+    const id = +input.value;
+    if (!id) {
       alert('กรุณาใส่ Trip ID');
       return;
     }
 
-    try {
-      const trip = await this.trip.getOneTrip(this.tripId);
-      if (!trip) {
-        alert('ไม่พบ Trip ที่มี ID นี้');
-        return;
-      }
-      this.name = trip.name;
-      this.destination = trip.destinationid.toString();
-      this.country = trip.country;
-      this.cover = trip.coverimage;
-      this.detail = trip.detail;
-      this.price = trip.price;
-      this.duration = trip.duration.toString();
-    } catch (error) {
-      alert('ไม่พบ Trip ที่มี ID นี้');
+    const result = await this.trip.getOneTrip(id);
+
+    if (!result) {
+      alert('ไม่พบข้อมูล Trip นี้');
+      return;
     }
+
+    // ✅ ตรวจสอบผ่านแล้ว ค่อยใช้ข้อมูล
+    this.tripId = id;
+    this.name = result.name;
+    this.destination = result.destinationid?.toString() ?? '';
+    this.country = result.country;
+    this.cover = result.coverimage;
+    this.detail = result.detail;
+    this.price = result.price;
+    this.duration = result.duration?.toString() ?? '';
   }
 
   async updateTrip() {
-    if (!this.tripId) {
+    if (this.tripId === null) {
       alert('กรุณาใส่ Trip ID');
       return;
     }
 
     const updatedTrip = {
       name: this.name,
-      destinationid: Number(this.destination),
       country: this.country,
+      destinationid: Number(this.destination),
       coverimage: this.cover,
       detail: this.detail,
       price: this.price,
-      duration: this.duration,
+      duration: Number(this.duration),
     };
 
     try {

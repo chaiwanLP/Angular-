@@ -41,11 +41,12 @@ export class Trip {
     return response;
   }
 
-  updateTrip(tripId: number, updatedTrip: { name: string; destinationid: number; country: string; coverimage: string; detail: string; price: number; duration: string; }) {
-    const url = `${this.constants.API_ENDPOINT}/trip/${tripId}`;
-    return lastValueFrom(this.http.put(url, updatedTrip));
-    
-  }
+  public async updateTrip(id: number, trip: any) {
+  const url = `${this.constants.API_ENDPOINT}/trip/${id}`;
+  const response = await lastValueFrom(this.http.put(url, trip));
+  return response;
+}
+
 
   public async deleteTrip(id: number): Promise<any> {
     const url = `${this.constants.API_ENDPOINT}/trip/${id}`;

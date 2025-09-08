@@ -1,21 +1,55 @@
-<button mat-raised-button color="primary" (click)="callApi()">Call API</button>
+<div class="flex flex-col items-center p-6 space-y-4 bg-gray-50 min-h-screen">
 
-<mat-form-field appearance="outline" style="padding-left: 10px">
-  <input matInput #keyword/>
-</mat-form-field>
-<button mat-raised-button color="primary" (click)="findOne(keyword)">FindOne</button>
+  <!-- หัวข้อ -->
+  <h2 class="text-2xl font-semibold text-gray-800">🎯 Trip API Interface</h2>
 
-<mat-form-field appearance="outline" style="padding-left: 10px">
-  <input matInput #name/>
-</mat-form-field>
-<button mat-raised-button color="primary" (click)="findName(name)">FindName</button>
+  <!-- ปุ่ม Call API -->
+  <button mat-raised-button color="primary" (click)="callApi()" class="w-48">
+    🚀 Call API
+  </button>
 
-<mat-form-field appearance="outline" style="padding-left: 10px;">
-  <input matInput #deleteId placeholder="ID to Delete" />
-</mat-form-field>
-<button mat-raised-button color="warn" (click)="Delete(+deleteId.value)">Delete</button>
+  <!-- FindOne -->
+  <div class="flex items-center gap-2">
+    <mat-form-field appearance="outline" class="w-60">
+      <mat-label>ID</mat-label>
+      <input matInput #keyword placeholder="Enter ID to Find" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="findOne(keyword)">
+      🔍 FindOne
+    </button>
+  </div>
 
+  <!-- FindName -->
+  <div class="flex items-center gap-2">
+    <mat-form-field appearance="outline" class="w-60">
+      <mat-label>Name</mat-label>
+      <input matInput #name placeholder="Enter Name to Find" />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="findName(name)">
+      🔍 FindName
+    </button>
+  </div>
 
-<h2 *ngFor="let trip of this.trips">{{trip.name}}</h2>
+  <!-- Delete -->
+  <div class="flex items-center gap-2">
+    <mat-form-field appearance="outline" class="w-60">
+      <mat-label>Delete by ID</mat-label>
+      <input matInput #deleteId placeholder="Enter ID to Delete" />
+    </mat-form-field>
+    <button mat-raised-button color="warn" (click)="Delete(+deleteId.value)">
+      🗑️ Delete
+    </button>
+  </div>
 
-<h2 *ngIf="this.trips.length === 0">No Data</h2>
+  <!-- แสดงผล Trip -->
+  <div class="w-full max-w-xl mt-6">
+    <h2 class="text-xl font-medium text-green-700" *ngFor="let trip of trips">
+      Idx :{{ trip.idx }} — 📍 {{ trip.name }}
+</h2>
+
+    <h2 class="text-red-500 text-center" *ngIf="trips.length === 0">
+      ❌ No Data
+    </h2>
+  </div>
+
+</div>
