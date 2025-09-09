@@ -42,12 +42,14 @@ export class UpdateTripComponent {
   constructor(private trip: Trip) {}
 
   async findOne(input: HTMLInputElement) {
-    const id = +input.value;
-    if (!id) {
-      alert('กรุณาใส่ Trip ID');
-      return;
-    }
+  const id = +input.value;
 
+  if (!id || isNaN(id)) {
+    alert('กรุณาใส่ Trip ID ที่ถูกต้อง');
+    return;
+  }
+
+  try {
     const result = await this.trip.getOneTrip(id);
 
     if (!result) {
@@ -55,7 +57,6 @@ export class UpdateTripComponent {
       return;
     }
 
-    // ✅ ตรวจสอบผ่านแล้ว ค่อยใช้ข้อมูล
     this.tripId = id;
     this.name = result.name;
     this.destination = result.destinationid?.toString() ?? '';
@@ -64,7 +65,11 @@ export class UpdateTripComponent {
     this.detail = result.detail;
     this.price = result.price;
     this.duration = result.duration?.toString() ?? '';
+  } catch (error: any) {
+    console.error('เกิดข้อผิดพลาดในการโหลดข้อมูล:', error);
+    alert('ไม่พบ Trip นี้ หรือเกิดข้อผิดพลาดในการโหลด');
   }
+}
 
   async updateTrip() {
     if (this.tripId === null) {

@@ -18,6 +18,9 @@ export class Trip {
   }
 
   public async getOneTrip(id: number): Promise<TripGetResponse | null> {
+    if (!id) {
+      return null;
+    }
     const url = `${this.constants.API_ENDPOINT}/trip/${id}`;
     const response = await lastValueFrom(this.http.get(url));
     return response as TripGetResponse;

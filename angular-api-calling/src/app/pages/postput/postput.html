@@ -2,13 +2,13 @@
   <h2 class="text-3xl font-bold text-gray-700">🌍 Post and Update Trip</h2>
 
   <!-- Name -->
-  <mat-form-field appearance="outline" class="w-full max-w-md">
+  <mat-form-field   class="w-full max-w-md">
     <mat-label>Name</mat-label>
     <input matInput [(ngModel)]="name" />
   </mat-form-field>
 
   <!-- Destination -->
-  <mat-form-field appearance="outline" class="w-full max-w-md">
+  <mat-form-field   class="w-full max-w-md">
     <mat-label>Destination</mat-label>
     <mat-select [(ngModel)]="destination">
       <mat-option *ngFor="let d of distinations" [value]="d.value">
@@ -18,38 +18,38 @@
   </mat-form-field>
 
   <!-- Country -->
-  <mat-form-field appearance="outline" class="w-full max-w-md">
+  <mat-form-field   class="w-full max-w-md">
     <mat-label>Country</mat-label>
     <input matInput [(ngModel)]="country" />
   </mat-form-field>
 
   <!-- Cover Image -->
-  <mat-form-field appearance="outline" class="w-full max-w-md">
+  <mat-form-field   class="w-full max-w-md">
     <mat-label>Cover Image</mat-label>
     <input matInput [(ngModel)]="cover" />
   </mat-form-field>
 
   <!-- Detail -->
-  <mat-form-field appearance="outline" class="w-full max-w-md">
+  <mat-form-field   class="w-full max-w-md">
     <mat-label>Detail</mat-label>
     <input matInput [(ngModel)]="detail" />
   </mat-form-field>
 
   <!-- Price -->
-  <mat-form-field appearance="outline" class="w-full max-w-md">
+  <mat-form-field  class="w-full max-w-md">
     <mat-label>Price</mat-label>
     <input matInput type="number" [(ngModel)]="price" />
   </mat-form-field>
 
   <!-- Duration -->
-  <mat-form-field appearance="outline" class="w-full max-w-md">
+  <mat-form-field class="w-full max-w-md">
     <mat-label>Duration</mat-label>
     <input matInput [(ngModel)]="duration" />
   </mat-form-field>
 
   <!-- Action Buttons -->
   <div class="flex flex-col sm:flex-row gap-4 mt-4">
-    <button mat-raised-button color="green" (click)="addNew()" class="w-full sm:w-48">
+    <button mat-raised-button color="primary" (click)="addNew()" class="w-full sm:w-48">
       ➕ Add New
     </button>
     <button mat-raised-button color="accent" (click)="updateTrip()" class="w-full sm:w-48">
