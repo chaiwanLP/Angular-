@@ -1,72 +1,79 @@
-<div class="flex flex-col items-center w-full max-w-md mx-auto mt-10 space-y-4">
+<div class="min-h-screen bg-blue-50 py-10 px-4">
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-3xl font-bold text-blue-800 mb-6 text-center">✏️ แก้ไขข้อมูลทริป</h2>
 
-  <!-- 🔍 ค้นหา Trip -->
-  <div class="w-full">
-    <label class="block text-sm font-medium mb-1">Trip ID</label>
-    <input
-      #tripId
-      type="number"
-      class="w-full border border-gray-300 rounded px-3 py-2"
-      placeholder="กรอก Trip ID"
-    />
+    <!-- 🔍 ค้นหา Trip -->
+    <div class="flex gap-4 items-end mb-6">
+      <mat-form-field class="flex-1">
+        <mat-label>ใส่ Trip ID</mat-label>
+        <input matInput #tripInput placeholder="เช่น 1, 2, 3..." />
+      </mat-form-field>
+
+      <button class="mb-5" mat-icon-button color="primary" (click)="findOne(tripInput)">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+
+    <!-- ✅ ฟอร์มจะแสดงหลังจากโหลด Trip -->
+    <form *ngIf="tripId !== null" class="space-y-4">
+      <!-- ชื่อ -->
+      <mat-form-field class="w-full">
+        <mat-label>ชื่อทริป</mat-label>
+        <input matInput [(ngModel)]="name" name="name" />
+      </mat-form-field>
+
+      <!-- ประเทศ -->
+      <mat-form-field class="w-full">
+        <mat-label>ประเทศ</mat-label>
+        <input matInput [(ngModel)]="country" name="country" />
+      </mat-form-field>
+
+      <!-- ทวีป -->
+      <mat-form-field class="w-full">
+        <mat-label>เลือกทวีป</mat-label>
+        <mat-select [(ngModel)]="destination" name="destination">
+          <mat-option *ngFor="let d of destinations" [value]="d.value">
+            {{ d.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Cover -->
+      <mat-form-field class="w-full">
+        <mat-label>URL รูปภาพหน้าปก</mat-label>
+        <input matInput [(ngModel)]="cover" name="cover" />
+      </mat-form-field>
+
+      <!-- รายละเอียด -->
+      <mat-form-field class="w-full">
+        <mat-label>รายละเอียด</mat-label>
+        <textarea matInput rows="3" [(ngModel)]="detail" name="detail"></textarea>
+      </mat-form-field>
+
+      <!-- ราคา -->
+      <mat-form-field class="w-full">
+        <mat-label>ราคา</mat-label>
+        <input matInput type="number" [(ngModel)]="price" name="price" />
+      </mat-form-field>
+
+      <!-- ระยะเวลา -->
+      <mat-form-field class="w-full">
+        <mat-label>ระยะเวลา (วัน)</mat-label>
+        <input matInput type="number" [(ngModel)]="duration" name="duration" />
+      </mat-form-field>
+
+      <!-- ปุ่มบันทึก -->
+      <div class="text-center pt-4">
+        <button mat-raised-button color="primary" (click)="updateTrip()"
+          class="px-6 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700">
+          💾 บันทึกข้อมูล
+        </button>
+      </div>
+
+      <!-- ปุ่มกลับ -->
+      <div class="text-center">
+        <a href="/" class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Back</a>
+      </div>
+    </form>
   </div>
-
-  <button
-    class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-    (click)="findOne(tripId)"
-  >
-    Load Trip
-  </button>
-
-  <!-- แสดงชื่อ Trip -->
-  <div *ngIf="Trips.length > 0" class="text-lg font-semibold text-center">
-    Loaded: {{ Trips[0].name }}
-  </div>
-
-  <!-- 📋 ฟอร์มอัปเดตข้อมูล -->
-  <div class="w-full">
-    <label class="block text-sm font-medium mb-1">Name</label>
-    <input [(ngModel)]="name" class="w-full border px-3 py-2 rounded" />
-  </div>
-
-  <div class="w-full">
-    <label class="block text-sm font-medium mb-1">Destination</label>
-    <select [(ngModel)]="destination" class="w-full border px-3 py-2 rounded">
-      <option *ngFor="let d of destinations" [value]="d.value">
-        {{ d.name }}
-      </option>
-    </select>
-  </div>
-
-  <div class="w-full">
-    <label class="block text-sm font-medium mb-1">Country</label>
-    <input [(ngModel)]="country" class="w-full border px-3 py-2 rounded" />
-  </div>
-
-  <div class="w-full">
-    <label class="block text-sm font-medium mb-1">Cover Image URL</label>
-    <input [(ngModel)]="cover" class="w-full border px-3 py-2 rounded" />
-  </div>
-
-  <div class="w-full">
-    <label class="block text-sm font-medium mb-1">Detail</label>
-    <input [(ngModel)]="detail" class="w-full border px-3 py-2 rounded" />
-  </div>
-
-  <div class="w-full">
-    <label class="block text-sm font-medium mb-1">Price</label>
-    <input type="number" [(ngModel)]="price" class="w-full border px-3 py-2 rounded" />
-  </div>
-
-  <div class="w-full">
-    <label class="block text-sm font-medium mb-1">Duration (days)</label>
-    <input [(ngModel)]="duration" class="w-full border px-3 py-2 rounded" />
-  </div>
-
-  <button
-    class="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 transition"
-    (click)="updateTrip()"
-  >
-    Update Trip
-  </button>
 </div>

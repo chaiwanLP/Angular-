@@ -1,59 +1,67 @@
-<div class="flex flex-col items-center min-h-screen bg-gray-50 p-6 space-y-5">
-  <h2 class="text-3xl font-bold text-gray-700">🌍 Post and Update Trip</h2>
+<div class="min-h-screen bg-blue-50 py-10 px-4">
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-3xl font-bold text-blue-800 mb-6 text-center">➕ เพิ่มข้อมูลทริปใหม่</h2>
 
-  <!-- Name -->
-  <mat-form-field   class="w-full max-w-md">
-    <mat-label>Name</mat-label>
-    <input matInput [(ngModel)]="name" />
-  </mat-form-field>
+    <form class="space-y-4" (ngSubmit)="addNew()">
+      <!-- ชื่อ -->
+      <mat-form-field class="w-full"  >
+        <mat-label>ชื่อทริป</mat-label>
+        <input matInput [(ngModel)]="name" name="name" required />
+      </mat-form-field>
 
-  <!-- Destination -->
-  <mat-form-field   class="w-full max-w-md">
-    <mat-label>Destination</mat-label>
-    <mat-select [(ngModel)]="destination">
-      <mat-option *ngFor="let d of distinations" [value]="d.value">
-        {{ d.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+      <!-- ประเทศ -->
+      <mat-form-field class="w-full" >
+        <mat-label>ประเทศ</mat-label>
+        <input matInput [(ngModel)]="country" name="country" required />
+      </mat-form-field>
 
-  <!-- Country -->
-  <mat-form-field   class="w-full max-w-md">
-    <mat-label>Country</mat-label>
-    <input matInput [(ngModel)]="country" />
-  </mat-form-field>
+      <!-- ทวีป -->
+      <mat-form-field class="w-full" >
+        <mat-label>เลือกทวีป</mat-label>
+        <mat-select [(ngModel)]="destination" name="destination" required>
+          <mat-option *ngFor="let d of distinations" [value]="d.value">
+            {{ d.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
-  <!-- Cover Image -->
-  <mat-form-field   class="w-full max-w-md">
-    <mat-label>Cover Image</mat-label>
-    <input matInput [(ngModel)]="cover" />
-  </mat-form-field>
+      <!-- รูปภาพ -->
+      <mat-form-field class="w-full"  >
+        <mat-label>URL รูปหน้าปก</mat-label>
+        <input matInput [(ngModel)]="cover" name="cover" />
+      </mat-form-field>
 
-  <!-- Detail -->
-  <mat-form-field   class="w-full max-w-md">
-    <mat-label>Detail</mat-label>
-    <input matInput [(ngModel)]="detail" />
-  </mat-form-field>
+      <!-- รายละเอียด -->
+      <mat-form-field class="w-full"  >
+        <mat-label>รายละเอียด</mat-label>
+        <textarea matInput [(ngModel)]="detail" name="detail" rows="3"></textarea>
+      </mat-form-field>
 
-  <!-- Price -->
-  <mat-form-field  class="w-full max-w-md">
-    <mat-label>Price</mat-label>
-    <input matInput type="number" [(ngModel)]="price" />
-  </mat-form-field>
+      <!-- ราคา -->
+      <mat-form-field class="w-full"  >
+        <mat-label>ราคา (บาท)</mat-label>
+        <input matInput type="number" [(ngModel)]="price" name="price" required />
+      </mat-form-field>
 
-  <!-- Duration -->
-  <mat-form-field class="w-full max-w-md">
-    <mat-label>Duration</mat-label>
-    <input matInput [(ngModel)]="duration" />
-  </mat-form-field>
+      <!-- ระยะเวลา -->
+      <mat-form-field class="w-full"  >
+        <mat-label>ระยะเวลา (วัน)</mat-label>
+        <input matInput type="number" [(ngModel)]="duration" name="duration" required />
+      </mat-form-field>
 
-  <!-- Action Buttons -->
-  <div class="flex flex-col sm:flex-row gap-4 mt-4">
-    <button mat-raised-button color="primary" (click)="addNew()" class="w-full sm:w-48">
-      ➕ Add New
-    </button>
-    <button mat-raised-button color="accent" (click)="updateTrip()" class="w-full sm:w-48">
-      ♻️ Update Trip
-    </button>
+      <!-- ปุ่ม -->
+      <div class="flex justify-between pt-6">
+        <button mat-raised-button color="primary" type="submit"
+          class="px-6 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-md">
+          ➕ เพิ่มข้อมูล
+        </button>
+
+        <button mat-stroked-button color="accent" (click)="updateTrip()" type="button"
+          class="px-4 py-2 rounded-md">
+          ✏️ ไปหน้าแก้ไข Trip
+        </button>
+      </div>
+    </form>
+    <a href="/" class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Back</a>
   </div>
 </div>

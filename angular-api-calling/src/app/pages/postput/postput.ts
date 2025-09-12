@@ -20,7 +20,7 @@ import { Router } from '@angular/router';
     MatButtonModule,
     FormsModule,
     HttpClientModule,
-  ],
+],
   templateUrl: './postput.html',
   styleUrl: './postput.css',
 })
@@ -37,7 +37,13 @@ export class PostputComponent {
     { value: 1, name: 'เอเชีย' },
     { value: 2, name: 'ยุโรป' },
     { value: 3, name: 'เอเชียตะวันออกเฉียงใต้' },
+    { value: 4, name: 'เอเชียตะวันตก' },
+    { value: 5, name: 'อเมริกาเหนือ' },
+    { value: 6, name: 'อเมริกาใต้' },
+    { value: 7, name: 'โอเชียเนีย' },
+    { value: 8, name: 'แอฟริกา' },
     { value: 9, name: 'ประเทศไทย' },
+    { value: 10, name: 'อื่นๆ' },
   ];
   constructor(private http: HttpClient, private tripService: Trip, private router: Router) {}
   async addNew() {

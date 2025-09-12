@@ -1,0 +1,9 @@
+<div *ngIf="trip; " class="p-6 max-w-xl mx-auto bg-white shadow rounded">
+    <img [src]="trip.coverimage" alt="{{ trip.name }}" class="w-full rounded mb-4" />
+    <h2 class="text-2xl font-bold">{{ trip.name }}</h2>
+    <p class="mt-2 text-gray-700">{{ trip.detail }}</p>
+    <p class="mt-1 font-medium">ประเทศ: {{ trip.country }}</p>
+    <p>ราคา: {{ trip.price }} บาท</p>
+    <p>ระยะเวลา: {{ trip.duration }} วัน</p>
+    <a href="/" class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Back</a>
+</div>

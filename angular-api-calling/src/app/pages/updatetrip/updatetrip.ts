@@ -7,6 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { TripGetResponse } from '../../model/trip_get_res';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-update-trip',
@@ -19,6 +20,7 @@ import { TripGetResponse } from '../../model/trip_get_res';
     MatInputModule,
     MatSelectModule,
     MatButtonModule,
+    MatIcon,
   ],
 })
 export class UpdateTripComponent {
@@ -42,34 +44,35 @@ export class UpdateTripComponent {
   constructor(private trip: Trip) {}
 
   async findOne(input: HTMLInputElement) {
-  const id = +input.value;
+    const id = +input.value;
 
-  if (!id || isNaN(id)) {
-    alert('กรุณาใส่ Trip ID ที่ถูกต้อง');
-    return;
-  }
-
-  try {
-    const result = await this.trip.getOneTrip(id);
-
-    if (!result) {
-      alert('ไม่พบข้อมูล Trip นี้');
+    if (!id || isNaN(id)) {
+      alert('กรุณาใส่ Trip ID ที่ถูกต้อง');
       return;
     }
 
-    this.tripId = id;
-    this.name = result.name;
-    this.destination = result.destinationid?.toString() ?? '';
-    this.country = result.country;
-    this.cover = result.coverimage;
-    this.detail = result.detail;
-    this.price = result.price;
-    this.duration = result.duration?.toString() ?? '';
-  } catch (error: any) {
-    console.error('เกิดข้อผิดพลาดในการโหลดข้อมูล:', error);
-    alert('ไม่พบ Trip นี้ หรือเกิดข้อผิดพลาดในการโหลด');
+    try {
+      const result = await this.trip.getOneTrip(id);
+
+      if (!result) {
+        alert('ไม่พบข้อมูล Trip นี้');
+        return;
+      }
+      console.log('โหลดข้อมูล Trip:', result);
+
+      this.tripId = id;
+      this.name = result.name;
+      this.destination = result.destinationid?.toString() ?? '';
+      this.country = result.country;
+      this.cover = result.coverimage;
+      this.detail = result.detail;
+      this.price = result.price;
+      this.duration = result.duration?.toString() ?? '';
+    } catch (error: any) {
+      console.error('เกิดข้อผิดพลาดในการโหลดข้อมูล:', error);
+      alert('ไม่พบ Trip นี้ หรือเกิดข้อผิดพลาดในการโหลด');
+    }
   }
-}
 
   async updateTrip() {
     if (this.tripId === null) {
@@ -88,9 +91,11 @@ export class UpdateTripComponent {
     };
 
     try {
-      await this.trip.updateTrip(this.tripId, updatedTrip);
-      alert('อัปเดตเรียบร้อย!');
+      const result = await this.trip.updateTrip(this.tripId, updatedTrip);
+      console.log('อัปเดตสำเร็จ:', result);
+      alert('✅ อัปเดตเรียบร้อย!');
     } catch (error) {
+      console.error('❌ เกิดข้อผิดพลาดในการอัปเดต:', error);
       alert('เกิดข้อผิดพลาดในการอัปเดต');
     }
   }

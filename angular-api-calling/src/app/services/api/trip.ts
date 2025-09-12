@@ -8,7 +8,6 @@ import { lastValueFrom } from 'rxjs';
   providedIn: 'root',
 })
 export class Trip {
-  
   constructor(private constants: Constants, private http: HttpClient) {}
 
   public async getTrip(options?: any) {
@@ -45,11 +44,10 @@ export class Trip {
   }
 
   public async updateTrip(id: number, trip: any) {
-  const url = `${this.constants.API_ENDPOINT}/trip/${id}`;
-  const response = await lastValueFrom(this.http.put(url, trip));
-  return response;
-}
-
+    const url = `${this.constants.API_ENDPOINT}/trip/${id}`;
+    const response = await lastValueFrom(this.http.put(url, trip));
+    return response;
+  }
 
   public async deleteTrip(id: number): Promise<any> {
     const url = `${this.constants.API_ENDPOINT}/trip/${id}`;
