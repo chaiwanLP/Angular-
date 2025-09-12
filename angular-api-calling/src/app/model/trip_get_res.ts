@@ -1,11 +1,19 @@
 export interface TripGetResponse {
-id: any;
+  id: any;
   idx: number;
   name: string;
   country: string;
-  destinationid: number;
+  destinationid?: number;
   coverimage: string;
   detail: string;
   price: number;
   duration: number;
+  // Added fields
+  destination_zone?: string;
+  destinationName?: string;
+}
+
+export interface Destination {
+  value: number;
+  name: string;
 }

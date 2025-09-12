@@ -9,6 +9,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
 import { Trip } from '../../services/api/trip';
 import { Router } from '@angular/router';
+import { Destination } from '../../model/trip_get_res';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-postput',
@@ -20,7 +22,8 @@ import { Router } from '@angular/router';
     MatButtonModule,
     FormsModule,
     HttpClientModule,
-],
+    MatIconModule,
+  ],
   templateUrl: './postput.html',
   styleUrl: './postput.css',
 })
@@ -33,20 +36,26 @@ export class PostputComponent {
   price: number = 0;
   duration: number = 0;
 
+  
+  constructor(
+    private http: HttpClient,
+    private tripService: Trip,
+    private router: Router
+  ) {}
+
   distinations: Destination[] = [
     { value: 1, name: 'เอเชีย' },
     { value: 2, name: 'ยุโรป' },
     { value: 3, name: 'เอเชียตะวันออกเฉียงใต้' },
-    { value: 4, name: 'เอเชียตะวันตก' },
-    { value: 5, name: 'อเมริกาเหนือ' },
-    { value: 6, name: 'อเมริกาใต้' },
-    { value: 7, name: 'โอเชียเนีย' },
-    { value: 8, name: 'แอฟริกา' },
     { value: 9, name: 'ประเทศไทย' },
-    { value: 10, name: 'อื่นๆ' },
   ];
-  constructor(private http: HttpClient, private tripService: Trip, private router: Router) {}
   async addNew() {
+     if (!this.name || !this.country || !this.destination) {
+      alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+      return;
+    }
+
+    console.log('Adding new trip with details:');
     const body = {
       name: this.name,
       country: this.country,
@@ -64,7 +73,6 @@ export class PostputComponent {
     } catch (error) {
       console.error('POST failed:', error);
     }
-    
   }
   updateTrip() {
     // Navigate to a specific route, e.g., home page
@@ -72,8 +80,4 @@ export class PostputComponent {
   }
 }
 
-interface Destination {
-  value: number;
-  name: string;
-}
 

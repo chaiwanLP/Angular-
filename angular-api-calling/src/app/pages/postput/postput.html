@@ -1,22 +1,29 @@
-<div class="min-h-screen bg-blue-50 py-10 px-4">
-  <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-3xl font-bold text-blue-800 mb-6 text-center">➕ เพิ่มข้อมูลทริปใหม่</h2>
+<div class="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 py-12 px-4 flex items-center justify-center">
+  <div class="w-full max-w-3xl bg-white p-8 rounded-2xl shadow-xl">
+    
+    <!-- Title -->
+    <h2 class="text-3xl font-extrabold text-blue-800 mb-8 text-center flex items-center justify-center gap-2">
+      <mat-icon class="text-blue-600">add_circle</mat-icon>
+      เพิ่มข้อมูลทริปใหม่
+    </h2>
 
-    <form class="space-y-4" (ngSubmit)="addNew()">
+    <!-- Form -->
+    <form class="space-y-6" (ngSubmit)="addNew()">
+      
       <!-- ชื่อ -->
-      <mat-form-field class="w-full"  >
+      <mat-form-field   class="w-full">
         <mat-label>ชื่อทริป</mat-label>
         <input matInput [(ngModel)]="name" name="name" required />
       </mat-form-field>
 
       <!-- ประเทศ -->
-      <mat-form-field class="w-full" >
+      <mat-form-field   class="w-full">
         <mat-label>ประเทศ</mat-label>
         <input matInput [(ngModel)]="country" name="country" required />
       </mat-form-field>
 
       <!-- ทวีป -->
-      <mat-form-field class="w-full" >
+      <mat-form-field   class="w-full">
         <mat-label>เลือกทวีป</mat-label>
         <mat-select [(ngModel)]="destination" name="destination" required>
           <mat-option *ngFor="let d of distinations" [value]="d.value">
@@ -26,42 +33,49 @@
       </mat-form-field>
 
       <!-- รูปภาพ -->
-      <mat-form-field class="w-full"  >
+      <mat-form-field   class="w-full">
         <mat-label>URL รูปหน้าปก</mat-label>
         <input matInput [(ngModel)]="cover" name="cover" />
       </mat-form-field>
 
       <!-- รายละเอียด -->
-      <mat-form-field class="w-full"  >
+      <mat-form-field   class="w-full">
         <mat-label>รายละเอียด</mat-label>
         <textarea matInput [(ngModel)]="detail" name="detail" rows="3"></textarea>
       </mat-form-field>
 
       <!-- ราคา -->
-      <mat-form-field class="w-full"  >
+      <mat-form-field   class="w-full">
         <mat-label>ราคา (บาท)</mat-label>
         <input matInput type="number" [(ngModel)]="price" name="price" required />
       </mat-form-field>
 
       <!-- ระยะเวลา -->
-      <mat-form-field class="w-full"  >
+      <mat-form-field  class="w-full">
         <mat-label>ระยะเวลา (วัน)</mat-label>
         <input matInput type="number" [(ngModel)]="duration" name="duration" required />
       </mat-form-field>
 
       <!-- ปุ่ม -->
-      <div class="flex justify-between pt-6">
-        <button mat-raised-button color="primary" type="submit"
-          class="px-6 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-md">
+      <div class="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6">
+        <button mat-raised-button color="primary" type="submit" 
+          class="px-6 py-2 bg-blue-600 text-white hover:bg-blue-700 rounded-md w-full sm:w-auto">
           ➕ เพิ่มข้อมูล
         </button>
 
-        <button mat-stroked-button color="accent" (click)="updateTrip()" type="button"
-          class="px-4 py-2 rounded-md">
+        <button mat-stroked-button color="accent" (click)="updateTrip()" type="button" 
+          class="px-6 py-2 rounded-md w-full sm:w-auto">
           ✏️ ไปหน้าแก้ไข Trip
         </button>
       </div>
     </form>
-    <a href="/" class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Back</a>
+
+    <!-- Back -->
+    <div class="text-center mt-6">
+      <a href="/" 
+         class="inline-flex items-center gap-2 px-6 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition">
+        <mat-icon>arrow_back</mat-icon> กลับหน้าหลัก
+      </a>
+    </div>
   </div>
 </div>

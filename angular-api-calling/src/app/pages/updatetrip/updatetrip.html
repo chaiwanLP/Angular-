@@ -2,19 +2,17 @@
   <div class="max-w-3xl mx-auto bg-white p-6 rounded-lg shadow-md">
     <h2 class="text-3xl font-bold text-blue-800 mb-6 text-center">✏️ แก้ไขข้อมูลทริป</h2>
 
-    <!-- 🔍 ค้นหา Trip -->
     <div class="flex gap-4 items-end mb-6">
       <mat-form-field class="flex-1">
         <mat-label>ใส่ Trip ID</mat-label>
         <input matInput #tripInput placeholder="เช่น 1, 2, 3..." />
       </mat-form-field>
 
-      <button class="mb-5" mat-icon-button color="primary" (click)="findOne(tripInput)">
+      <button class="mb-7" mat-icon-button color="primary" (click)="findOne(tripInput)">
         <mat-icon>search</mat-icon>
       </button>
     </div>
 
-    <!-- ✅ ฟอร์มจะแสดงหลังจากโหลด Trip -->
     <form *ngIf="tripId !== null" class="space-y-4">
       <!-- ชื่อ -->
       <mat-form-field class="w-full">
@@ -71,9 +69,12 @@
       </div>
 
       <!-- ปุ่มกลับ -->
-      <div class="text-center">
-        <a href="/" class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">Back</a>
-      </div>
+      <div class="text-center mt-6">
+      <a href="/" 
+         class="inline-flex items-center gap-2 px-6 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition">
+        <mat-icon>arrow_back</mat-icon> กลับหน้าหลัก
+      </a>
+    </div>
     </form>
   </div>
 </div>

@@ -3,12 +3,10 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TripGetResponse } from '../../model/trip_get_res';
-import { lastValueFrom } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { Trip } from '../../services/api/trip';
 import { RouterModule } from '@angular/router';
-import { routes } from '../../app.routes';
 import { MatSelectModule } from '@angular/material/select';
 import { MatOptionModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
@@ -38,8 +36,33 @@ export class CallApiComponent implements OnInit {
     console.log('Init State');
   }
   trips: TripGetResponse[] = [];
-  countries = ['ญี่ปุ่น', 'ประเทศไทย', 'เนเธอร์แลนด์'];
+
+  distinations: Destination[] = [
+    { value: 1, name: 'เอเชีย' },
+    { value: 2, name: 'ยุโรป' },
+    { value: 3, name: 'เอเชียตะวันออกเฉียงใต้' },
+    { value: 9, name: 'ประเทศไทย' },
+  ];
+
+  countries: string[] = [];
+
   selectedCountry: string = '';
+  async loadDataAsync() {
+    try {
+      this.trips = await this.tripService.getTrip();
+    } catch (error) {
+      console.error('โหลด trips ไม่สำเร็จ', error);
+    }
+  }
+  async callApi() {
+    this.trips = await this.tripService.getTrip();
+    this.updateCountries();
+    console.log(this.trips);
+  }
+  updateCountries() {
+  const allCountries = this.trips.map(t => t.country);
+  this.countries = [...new Set(allCountries)];
+}
 
   async onCountryChange(event: any) {
     const selected = event.value;
@@ -53,27 +76,17 @@ export class CallApiComponent implements OnInit {
       this.loadDataAsync();
     }
   }
-  async loadDataAsync() {
-    this.trips = await this.tripService.getTrip();
-  }
-  async callApi() {
-    this.trips = await this.tripService.getTrip();
-    console.log(this.trips);
-    console.log(this.trips[0].idx);
-    console.log(this.trips[0].name);
-    console.log('Call Completed');
-  }
 
   async findOne(input: HTMLInputElement) {
-    if(!input.value || isNaN(+input.value)) {
+    if (!input.value || isNaN(+input.value)) {
       alert('กรุณากรอก ID ที่เป็นตัวเลข');
-      return;  
+      return;
     }
-    if(+input.value <=0 ) {
+    if (+input.value <= 0) {
       alert('กรุณากรอก ID ที่มากกว่า 0');
-      return;  
+      return;
     }
-    if(+input.value >this.trips.length) {
+    if (+input.value > this.trips.length) {
       alert('ไม่มีข้อมูล ID นี้');
       return;
     }
@@ -86,17 +99,22 @@ export class CallApiComponent implements OnInit {
   }
 
   async findName(input: HTMLInputElement) {
-    console.log(input.value);
-    const trips = await this.tripService.getTripByName(input.value);
-    this.trips = trips.filter((trip) =>
-      trip.name.toLowerCase().includes(input.value.toLowerCase())
-    );
-    console.log(this.trips);
-    if (this.trips.length > 0) {
-      console.log(this.trips[0].name);
+    const query = input.value.trim();
+    if (!query) {
+      alert('กรุณากรอกชื่อทริป');
+      return;
     }
-    console.log('Call Completed');
+
+    const trips = await this.tripService.getTripByName(query);
+    this.trips = trips.filter((trip) =>
+      trip.name.toLowerCase().includes(query.toLowerCase())
+    );
+
+    if (this.trips.length === 0) {
+      alert('ไม่พบข้อมูลทริปที่ค้นหา');
+    }
   }
+
   async Delete(id: number) {
     if (confirm('Are you sure to delete id ' + id + '?')) {
       await this.tripService.deleteTrip(id);
@@ -108,4 +126,8 @@ export class CallApiComponent implements OnInit {
     (event.target as HTMLImageElement).src =
       'https://support.heberjahiz.com/hc/article_attachments/21013076295570';
   }
+}
+interface Destination {
+  value: number;
+  name: string;
 }
